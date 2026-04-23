@@ -1023,41 +1023,6 @@ function ensureImageReady(image) {
   });
 }
 
-function personaDataScriptPath(code) {
-  const imagePath = personaImages[code] || personaImages.ISCR;
-  return imagePath.replace("/personas/", "/persona-data/").replace(".webp", ".js");
-}
-
-function loadPersonaDataUrl(code) {
-  const key = personaImages[code] ? code : "ISCR";
-  window.teacherTiPersonaData = window.teacherTiPersonaData || {};
-  if (window.teacherTiPersonaData[key]) return Promise.resolve(window.teacherTiPersonaData[key]);
-
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = personaDataScriptPath(key);
-    script.async = true;
-    script.onload = () => {
-      if (window.teacherTiPersonaData[key]) {
-        resolve(window.teacherTiPersonaData[key]);
-        return;
-      }
-      reject(new Error("分享卡图片加载失败，请刷新后再试。"));
-    };
-    script.onerror = () => reject(new Error("分享卡图片加载失败，请刷新后再试。"));
-    document.head.append(script);
-  });
-}
-
-function loadCanvasImage(src) {
-  return new Promise((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error("分享卡图片加载失败，请刷新后再试。"));
-    image.src = src;
-  });
-}
-
 function getCurrentResultData() {
   const scores = calculateScores();
   const sides = selectedSides(scores);
@@ -1165,8 +1130,7 @@ function closeShareCardPreview() {
 async function createResultShareCardCanvas() {
   const { sides, code, profile, match } = getCurrentResultData();
   await ensureImageReady(personaImage);
-  const personaDataUrl = await loadPersonaDataUrl(code);
-  const shareCardImage = await loadCanvasImage(personaDataUrl);
+  const shareCardImage = personaImage;
 
   const width = 1080;
   const margin = 56;

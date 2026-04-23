@@ -25,3 +25,32 @@
 - 改 16 种类型、英文人格名和原型人物：编辑 `app.js` 里的 `typeProfiles`
 
 直接用浏览器打开 `index.html` 即可运行。
+
+## GitHub Pages 发布
+
+这个项目已经补好了 GitHub Pages 工作流：
+
+- `.github/workflows/deploy-pages.yml`
+- `.nojekyll`
+
+最短上线步骤：
+
+1. 在 GitHub 新建一个仓库，比如 `teacher-ti`
+2. 把当前本地仓库推上去：
+
+```bash
+git remote add origin <你的仓库地址>
+git push -u origin main
+```
+
+3. 打开 GitHub 仓库设置：
+   `Settings -> Pages`
+4. 在 `Build and deployment` 里选择：
+   `Source: GitHub Actions`
+5. 之后每次推送到 `main`，GitHub 都会自动发布
+
+如果你用的是项目页，地址通常会是：
+
+`https://<你的用户名>.github.io/<仓库名>/`
+
+如果你以后绑定自定义域名，也可以继续沿用这套工作流。

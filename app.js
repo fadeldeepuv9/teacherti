@@ -104,11 +104,11 @@ const questions = [
     options: [
       {
         text: "黑板立刻顶上，嘴上淡定：“设备休息一下，脑子别跟着休息。”",
-        impact: { aura: -1, path: -1, growth: -1, push: 1 }
+        impact: { aura: 1, path: -1, push: 1 }
       },
       {
         text: "让学生拿纸画本节课路线图，设备可以崩，主线不能塌。",
-        impact: { aura: 1, path: -1, growth: -1 }
+        impact: { aura: 1, growth: -1 }
       },
       {
         text: "把事故改成临场任务：“如果你是老师，这页你怎么救场？”",
@@ -129,7 +129,7 @@ const questions = [
       },
       {
         text: "敢说就先接住，别一棍子打没了，方向盘我慢慢掰回来。",
-        impact: { growth: 1, push: -1, path: -1 }
+        impact: { growth: 1, push: -1 }
       }
     ]
   },
@@ -142,11 +142,11 @@ const questions = [
       },
       {
         text: "第2步有效，第4步漏条件。重写，不然答案比你本人还叛逆。",
-        impact: { growth: -1, push: 1, path: -1 }
+        impact: { growth: -1, push: 1 }
       },
       {
         text: "圈亮点、划返工区，旁边写：你离会做只差会写，别让卷面背锅。",
-        impact: { growth: -1, push: -1, path: -1 }
+        impact: { growth: -1, push: -1 }
       }
     ]
   },
@@ -155,15 +155,15 @@ const questions = [
     options: [
       {
         text: "立刻改成举手投票，先给沉默同学一个低成本上线入口。",
-        impact: { aura: -1, path: -1, push: -1 }
+        impact: { aura: -1, push: -1 }
       },
       {
         text: "安静十秒继续看着他们。别急，脑子启动也有加载条。",
-        impact: { aura: 1, growth: -1, push: 1 }
+        impact: { aura: 1, growth: 1, push: 1 }
       },
       {
         text: "换个问法：“如果这题出现在考试最后一页，你第一反应是什么？”",
-        impact: { aura: -1, path: 1, push: -1 }
+        impact: { aura: -1, path: 1, push: 1 }
       }
     ]
   },
@@ -180,7 +180,7 @@ const questions = [
       },
       {
         text: "亮点可以有，但别亮到学生忘了自己到底学了啥。",
-        impact: { path: -1, push: -1, growth: 1 }
+        impact: { push: -1, growth: 1 }
       }
     ]
   },
@@ -197,7 +197,7 @@ const questions = [
       },
       {
         text: "把你卡住的那一秒说出来，我来抓案发现场。",
-        impact: { growth: -1, aura: 1, push: -1 }
+        impact: { growth: -1, aura: 1, push: -1, path: 1 }
       }
     ]
   },
@@ -223,7 +223,7 @@ const questions = [
     options: [
       {
         text: "先给三条证据：作业、课堂、测验。家长群可以感性，沟通先讲事实。",
-        impact: { growth: -1, path: -1 }
+        impact: { growth: -1, path: -1, push: 1 }
       },
       {
         text: "最近他有个很小但很重要的变化，我想先讲这个，别只盯着分数脸色。",
@@ -231,7 +231,7 @@ const questions = [
       },
       {
         text: "结论先别急，我把学校里几个现场还原给您，咱别隔空猜剧情。",
-        impact: { aura: 1, growth: 1, push: -1 }
+        impact: { aura: 1, growth: 1, push: -1, path: 1 }
       }
     ]
   },
@@ -240,7 +240,7 @@ const questions = [
     options: [
       {
         text: "给他一分钟发挥，然后一句“所以回到本题”精准降落。",
-        impact: { aura: -1, path: -1, push: 1 }
+        impact: { aura: -1, push: 1 }
       },
       {
         text: "把跑偏写到黑板边角：先存档，主线走完再处理你这个支线任务。",
@@ -261,7 +261,7 @@ const questions = [
       },
       {
         text: "找他聊两句，分数只是报警声，不一定是全部案情。",
-        impact: { growth: 1, push: -1 }
+        impact: { growth: 1, push: -1, path: 1 }
       },
       {
         text: "直接安排短平快返工路线：先别emo，能捡的分先捡回来。",
@@ -278,7 +278,7 @@ const questions = [
       },
       {
         text: "流程完美得像说明书，学生只负责按按钮和假装点头。",
-        impact: { path: 1, push: -1 }
+        impact: { path: 1, push: -1, growth: 1 }
       },
       {
         text: "学生玩得很开心，但我发现明天还得把今天重新讲一遍。",
@@ -295,11 +295,11 @@ const questions = [
       },
       {
         text: "情绪我理解，规则也照旧。你可以慢一点，但不能直接人间蒸发。",
-        impact: { push: 1, growth: -1, path: -1 }
+        impact: { push: 1, growth: -1 }
       },
       {
         text: "给他一个最小任务：今天只交第一题，先把学习链接重新插上。",
-        impact: { push: -1, path: -1, growth: -1 }
+        impact: { push: 1, growth: 1 }
       }
     ]
   },
@@ -329,11 +329,11 @@ const questions = [
       },
       {
         text: "你刚才那句话说明脑子真的开机了，别停，继续往前拱。",
-        impact: { growth: 1, push: -1, aura: -1 }
+        impact: { growth: 1, push: 1, aura: -1 }
       },
       {
         text: "这个答案不完美，但很有出息，我们把它从半成品养到能见人。",
-        impact: { growth: 1, path: 1, push: -1 }
+        impact: { growth: 1, path: 1 }
       }
     ]
   },
@@ -346,7 +346,7 @@ const questions = [
       },
       {
         text: "学生哪一刻真的被点亮了，那一下比公开课滤镜更值钱。",
-        impact: { aura: -1, growth: 1, push: -1 }
+        impact: { aura: -1, growth: 1, push: -1, path: 1 }
       },
       {
         text: "我在想，如果不按公开课套路，这节课会不会更像真实课堂。",
@@ -384,7 +384,7 @@ const questions = [
       },
       {
         text: "承认它干，然后说：今天任务很简单，把它翻译成人话。",
-        impact: { aura: -1, push: -1, path: -1 }
+        impact: { push: 1 }
       }
     ]
   },
@@ -418,7 +418,7 @@ const questions = [
       },
       {
         text: "有秩序、有证据、有台阶，别靠玄学学习，也别靠考前许愿。",
-        impact: { push: 1, growth: -1, path: -1, aura: 1 }
+        impact: { push: 1, path: -1, aura: 1, growth: 1 }
       }
     ]
   },
@@ -444,7 +444,7 @@ const questions = [
     options: [
       {
         text: "行走的课代表：什么都安排好了，连谁没带笔都像提前知道。",
-        impact: { path: -1, growth: -1, aura: 1 }
+        impact: { growth: -1, aura: 1 }
       },
       {
         text: "课堂气氛组组长：一开口，后排都不好意思继续离线。",

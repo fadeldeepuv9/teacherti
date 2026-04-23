@@ -441,11 +441,19 @@ h1 {
   overflow: hidden;
 }
 
+.persona-visual.is-loading {
+  background: #ece6d3;
+}
+
 .persona-visual img {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+}
+
+.persona-visual img.is-loading {
+  visibility: hidden;
 }
 
 .result-layout {

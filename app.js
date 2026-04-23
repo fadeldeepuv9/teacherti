@@ -724,6 +724,7 @@ const typeCode = document.querySelector("#typeCode");
 const typeName = document.querySelector("#typeName");
 const typeCnName = document.querySelector("#typeCnName");
 const matchScore = document.querySelector("#matchScore");
+const personaVisual = document.querySelector(".persona-visual");
 const personaImage = document.querySelector("#personaImage");
 const educatorKind = document.querySelector("#educatorKind");
 const educatorName = document.querySelector("#educatorName");
@@ -746,6 +747,7 @@ let shareCardObjectUrl = null;
 let shareCardFilename = "";
 const imageAssetCache = new Map();
 let personaWarmToken = 0;
+let personaRenderToken = 0;
 
 function loadState() {
   const fallback = {
@@ -795,6 +797,11 @@ function loadImageAsset(src) {
 
   imageAssetCache.set(src, request);
   return request;
+}
+
+function setPersonaLoadingState(isLoading) {
+  personaVisual.classList.toggle("is-loading", isLoading);
+  personaImage.classList.toggle("is-loading", isLoading);
 }
 
 function networkAllowsPersonaWarmup() {
@@ -879,7 +886,9 @@ function preloadLikelyPersonaImage() {
 function warmPersonaImages() {
   if (!networkAllowsPersonaWarmup() || !getAnsweredCount() || state.showingResult) return;
 
-  const queue = estimatePersonaPriority().filter((code) => !imageAssetCache.has(personaImages[code]));
+  const queue = estimatePersonaPriority()
+    .slice(0, 6)
+    .filter((code) => !imageAssetCache.has(personaImages[code]));
   if (!queue.length) return;
 
   const token = ++personaWarmToken;
@@ -897,6 +906,31 @@ function warmPersonaImages() {
   };
 
   scheduleIdleTask(step);
+}
+
+async function showResultPersonaImage(src, alt) {
+  const token = ++personaRenderToken;
+  personaImage.alt = alt;
+  setPersonaLoadingState(true);
+  personaImage.removeAttribute("src");
+
+  try {
+    await loadImageAsset(src);
+  } catch {
+    imageAssetCache.delete(src);
+    try {
+      await loadImageAsset(src);
+    } catch {
+      if (token === personaRenderToken) {
+        setPersonaLoadingState(false);
+      }
+      return;
+    }
+  }
+
+  if (token !== personaRenderToken) return;
+  personaImage.src = src;
+  setPersonaLoadingState(false);
 }
 
 function saveState() {
@@ -1458,9 +1492,7 @@ function renderResult() {
   matchScore.textContent = `匹配度 ${match}%`;
   personaWarmToken += 1;
   const resultImageSrc = personaImages[code] || personaImages.ISCR;
-  loadImageAsset(resultImageSrc).catch(() => {});
-  personaImage.src = resultImageSrc;
-  personaImage.alt = `${profile.name}角色设定图`;
+  showResultPersonaImage(resultImageSrc, `${profile.name}角色设定图`);
   educatorKind.textContent = profile.kind;
   educatorName.textContent = profile.figure;
   educatorStory.textContent = profile.story;

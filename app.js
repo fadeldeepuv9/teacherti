@@ -726,6 +726,7 @@ const typeCnName = document.querySelector("#typeCnName");
 const matchScore = document.querySelector("#matchScore");
 const personaVisual = document.querySelector(".persona-visual");
 const personaImage = document.querySelector("#personaImage");
+const personaLoadingNote = document.querySelector("#personaLoadingNote");
 const educatorKind = document.querySelector("#educatorKind");
 const educatorName = document.querySelector("#educatorName");
 const educatorStory = document.querySelector("#educatorStory");
@@ -802,6 +803,9 @@ function loadImageAsset(src) {
 function setPersonaLoadingState(isLoading) {
   personaVisual.classList.toggle("is-loading", isLoading);
   personaImage.classList.toggle("is-loading", isLoading);
+  if (personaLoadingNote) {
+    personaLoadingNote.hidden = !isLoading;
+  }
 }
 
 function networkAllowsPersonaWarmup() {

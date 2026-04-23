@@ -432,6 +432,7 @@ h1 {
 }
 
 .persona-visual {
+  position: relative;
   width: min(100%, 560px);
   margin: 0 0 24px;
   border: 3px solid var(--line);
@@ -443,6 +444,24 @@ h1 {
 
 .persona-visual.is-loading {
   background: #ece6d3;
+}
+
+.persona-loading-note {
+  position: absolute;
+  inset: 50% 20px auto;
+  transform: translateY(-50%);
+  margin: 0;
+  text-align: center;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  font-weight: 1000;
+  color: #5f5748;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.persona-visual.is-loading .persona-loading-note {
+  opacity: 1;
 }
 
 .persona-visual img {

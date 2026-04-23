@@ -705,6 +705,12 @@ const personaImages = {
   AENR: "./assets/personas/aenr-open-air-humanist.webp",
   AECP: "./assets/personas/aecp-action-truth-seeker.webp"
 };
+const personaPreviewImages = Object.fromEntries(
+  Object.entries(personaImages).map(([code, src]) => [
+    code,
+    src.replace("/personas/", "/personas-lite/").replace(".webp", ".jpg")
+  ])
+);
 
 const optionLabels = ["A", "B", "C"];
 const storageKey = "teacher-ti-state-v8";
@@ -744,6 +750,8 @@ const shareCloseButton = document.querySelector("#shareCloseButton");
 let advanceTimer = null;
 let shareCardObjectUrl = null;
 let shareCardFilename = "";
+const imageAssetCache = new Map();
+let personaWarmStarted = false;
 
 function loadState() {
   const fallback = {
@@ -766,6 +774,74 @@ function loadState() {
   } catch {
     return fallback;
   }
+}
+
+function getAnsweredCount() {
+  return state.answers.filter((answer) => answer !== null).length;
+}
+
+function loadImageAsset(src) {
+  if (!src) {
+    return Promise.reject(new Error("图片加载失败，请稍后再试。"));
+  }
+
+  const cached = imageAssetCache.get(src);
+  if (cached) return cached;
+
+  const request = new Promise((resolve, reject) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = () => resolve(image);
+    image.onerror = () => {
+      imageAssetCache.delete(src);
+      reject(new Error("图片加载失败，请稍后再试。"));
+    };
+    image.src = src;
+  });
+
+  imageAssetCache.set(src, request);
+  return request;
+}
+
+function networkAllowsPersonaWarmup() {
+  const connection = navigator.connection;
+  if (!connection) return true;
+  if (connection.saveData) return false;
+  return !String(connection.effectiveType || "").includes("2g");
+}
+
+function scheduleIdleTask(callback) {
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(callback, { timeout: 1200 });
+    return;
+  }
+  window.setTimeout(callback, 180);
+}
+
+function preloadLikelyPersonaPreview() {
+  if (!getAnsweredCount()) return;
+  const likelyCode = buildType(calculateScores());
+  loadImageAsset(personaPreviewImages[likelyCode] || personaPreviewImages.ISCR).catch(() => {});
+}
+
+function warmPersonaPreviewImages() {
+  if (personaWarmStarted || !networkAllowsPersonaWarmup() || getAnsweredCount() < 6) return;
+  personaWarmStarted = true;
+
+  const likelyCode = buildType(calculateScores());
+  const queue = [likelyCode, ...Object.keys(personaPreviewImages).filter((code) => code !== likelyCode)];
+  let index = 0;
+
+  const step = () => {
+    if (index >= queue.length) return;
+    const src = personaPreviewImages[queue[index]];
+    index += 1;
+    loadImageAsset(src).catch(() => {}).finally(() => {
+      scheduleIdleTask(step);
+    });
+  };
+
+  scheduleIdleTask(step);
 }
 
 function saveState() {
@@ -853,7 +929,7 @@ function renderQuiz() {
   state.showingResult = false;
   contentGrid.classList.remove("is-result-mode");
   const question = questions[state.current];
-  const answeredCount = state.answers.filter((answer) => answer !== null).length;
+  const answeredCount = getAnsweredCount();
 
   quizView.hidden = false;
   resultView.hidden = true;
@@ -865,6 +941,8 @@ function renderQuiz() {
   prevButton.disabled = state.current === 0;
 
   renderOptions(question);
+  preloadLikelyPersonaPreview();
+  warmPersonaPreviewImages();
   saveState();
 }
 
@@ -1129,8 +1207,7 @@ function closeShareCardPreview() {
 
 async function createResultShareCardCanvas() {
   const { sides, code, profile, match } = getCurrentResultData();
-  await ensureImageReady(personaImage);
-  const shareCardImage = personaImage;
+  const shareCardImage = await loadImageAsset(personaImages[code] || personaImages.ISCR);
 
   const width = 1080;
   const margin = 56;
@@ -1324,7 +1401,7 @@ function renderResult() {
   typeName.textContent = profile.englishName;
   typeCnName.textContent = profile.name;
   matchScore.textContent = `匹配度 ${match}%`;
-  personaImage.src = personaImages[code] || personaImages.ISCR;
+  personaImage.src = personaPreviewImages[code] || personaPreviewImages.ISCR;
   personaImage.alt = `${profile.name}角色设定图`;
   educatorKind.textContent = profile.kind;
   educatorName.textContent = profile.figure;

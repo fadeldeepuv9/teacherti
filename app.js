@@ -107,7 +107,7 @@ const questions = [
         impact: { aura: 1, path: -1, push: 1 }
       },
       {
-        text: "让学生拿纸画本节课路线图，设备可以崩，主线不能塌。",
+        text: "让学生先拿纸画本节课路线图：设备可以崩，主线不能塌。",
         impact: { aura: 1, growth: -1 }
       },
       {
@@ -137,7 +137,7 @@ const questions = [
     prompt: "批到一份字很潦草但思路有光的作业，你会写？",
     options: [
       {
-        text: "思路不错，字像刚从现场撤离。请把才华从草稿堆里捞出来。",
+        text: "思路不错，但字像刚从现场撤离。请把才华从草稿堆里捞出来。",
         impact: { growth: 1, push: 1 }
       },
       {
@@ -145,7 +145,7 @@ const questions = [
         impact: { growth: -1, push: 1 }
       },
       {
-        text: "圈亮点、划返工区，旁边写：你离会做只差会写，别让卷面背锅。",
+        text: "圈亮点、划返工区，再写一句：你离会做只差会写，别让卷面背锅。",
         impact: { growth: -1, push: -1 }
       }
     ]
@@ -179,7 +179,7 @@ const questions = [
         impact: { path: 1, aura: -1, push: 1 }
       },
       {
-        text: "亮点可以有，但别亮到学生忘了自己到底学了啥。",
+        text: "亮点可以有，但我会先盯学生有没有真的学会，别把课上成展示柜。",
         impact: { push: -1, growth: 1 }
       }
     ]
@@ -290,7 +290,7 @@ const questions = [
     prompt: "班里有人情绪上头，作业也不交。你会先？",
     options: [
       {
-        text: "先把人从情绪里捞出来，作业可以补，人不能先掉线。",
+        text: "先单独聊两句，把人从情绪里捞出来，作业可以补，人不能先掉线。",
         impact: { push: -1, growth: 1 }
       },
       {
@@ -298,7 +298,7 @@ const questions = [
         impact: { push: 1, growth: -1 }
       },
       {
-        text: "给他一个最小任务：今天只交第一题，先把学习链接重新插上。",
+        text: "给他一个最小任务：今天先交第一题，别全补，先把学习链接重新插上。",
         impact: { push: 1, growth: 1 }
       }
     ]
@@ -328,7 +328,7 @@ const questions = [
         impact: { growth: -1, path: -1 }
       },
       {
-        text: "你刚才那句话说明脑子真的开机了，别停，继续往前拱。",
+        text: "你刚才那句话说明脑子真的开机了，别停，顺着这个思路再往前拱。",
         impact: { growth: 1, push: 1, aura: -1 }
       },
       {
@@ -379,7 +379,7 @@ const questions = [
         impact: { path: -1, growth: -1, aura: 1 }
       },
       {
-        text: "找个生活现场把它拽出来，不然学生只会记住这页很难熬。",
+        text: "找个学生见过的生活现场把它拽出来，不然他们只会记住这页很难熬。",
         impact: { path: 1, aura: -1, growth: 1 }
       },
       {
@@ -417,7 +417,7 @@ const questions = [
         impact: { push: -1, aura: -1, path: 1 }
       },
       {
-        text: "有秩序、有证据、有台阶，别靠玄学学习，也别靠考前许愿。",
+        text: "有秩序、有证据、有台阶，学习别靠玄学，考试别靠许愿。",
         impact: { push: 1, path: -1, aura: 1, growth: 1 }
       }
     ]
@@ -426,7 +426,7 @@ const questions = [
     prompt: "学生把你的课后建议当耳旁风，你会？",
     options: [
       {
-        text: "把建议压缩成一个动作：今晚只做这一步，不许已读乱回。",
+        text: "把建议压缩成一个动作：今晚先做这一步，明天我看结果，不许已读乱回。",
         impact: { push: 1, growth: -1, path: -1 }
       },
       {
